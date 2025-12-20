@@ -1,66 +1,9 @@
+from classes.Library import Library
+from classes.Student import Student
+from classes.Order import Order
+from classes.Book import Book
+from classes.Employee import Employee
 
-class Student:
-    def __init__(self, name: str, marks: list):
-        self.name = name
-        self.marks = marks
-
-    def __str__(self) -> str:
-        return f'Student: {self.name}'
-
-class Library:
-    def __init__(self, city:str, street:str, zip_code:str, open_hours: str, phone: str) -> None:
-        self.city = city
-        self.street = street
-        self.zip_code = zip_code
-        self.open_hours = open_hours
-        self.phone = phone
-
-    def __str__(self) -> str:
-        return f'Library: {self.city} {self.street} {self.zip_code} {self.phone}'
-
-class Employee:
-    def __init__(self, first_name:str, last_name:str, hire_date: str,
-                 birth_date:str, city:str, street:str, zip_code:str, phone: str) -> None:
-        self.first_name = first_name
-        self.last_name = last_name
-        self.hire_date = hire_date
-        self.birth_date = birth_date
-        self.city = city
-        self.street = street
-        self.zip_code = zip_code
-        self.phone = phone
-
-    def __str__(self) -> str:
-        return f'Employee: {self.first_name} {self.last_name}'
-
-class Book:
-    def __init__(self, library:Library, publication_date:str, author_name:str, author_surname:str,
-                 number_of_pages:int) -> None:
-        self.library = library
-        self.publication_date = publication_date
-        self.author_name = author_name
-        self.author_surname = author_surname
-        self.number_of_pages = number_of_pages
-
-    def __str__(self) -> str:
-        return f"Book: {self.publication_date} {self.author_name} {self.author_surname} {self.number_of_pages}"
-
-class Order:
-    def __init__(self, employee:Employee, student:Student, books:list, order_date:str) -> None:
-        self.employee = employee
-        self.student = student
-        self.books = books
-        self.order_date = order_date
-
-    def __str__(self) -> str:
-        books_str = "\n".join(f"    - {str(book)}" for book in self.books)
-        return (
-            f"Order:\n"
-            f"  {self.employee}\n"
-            f"  {self.student}\n"
-            f"  Books:\n{books_str}\n"
-            f"  Order date: {self.order_date}"
-        )
 
 
 lib1 = Library(
