@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    restart: always
+
+  backend:
+    build: ./backend
+    depends_on:
+      - rabbitmq
+      - redis
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - REDIS_HOST=redis
+      - RABBITMQ_HOST=rabbitmq
+
+  workers:
+    build: ./backend
+    depends_on:
+      - rabbitmq
+      - redis
+    command: python worker.py
+    environment:
+      - PYTHONUNBUFFERED=1
+      - REDIS_HOST=redis
+      - RABBITMQ_HOST=rabbitmq
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend

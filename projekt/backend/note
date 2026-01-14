@@ -1,0 +1,13 @@
+docker compose up -d
+python -m uvicorn main:app --reload
+.\enqueue-1000-images.ps1
+.\start-workers.ps1 -Workers 4
+Stop-Process -Name python -Force
+
+http://localhost:15672/#/
+http://localhost:8000/docs
+http://localhost:5173/
+
+docker compose down
+docker compose build
+docker compose up --build --scale workers=4
